@@ -75,10 +75,9 @@ glm::mat4 Screen::getVeiwOrtMatrix() const {
     glm::mat4 ort(1);
     ort[0][0] = 2.f / (right - left);
     ort[1][1] = 2.f / (top - bottom);
-    ort[2][2] = 2.f / (far - near);
+    ort[2][2] = -1;
     ort[3][0] = -(right + left) / (right - left);
     ort[3][1] = -(top + bottom) / (top - bottom);
-    ort[3][2] = (near + far) / (far - near);
     return veiwPort * ort;
 }
 
