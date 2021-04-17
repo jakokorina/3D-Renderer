@@ -7,7 +7,7 @@
 
 class Screen {
     int height, width;
-    float far = 10.0f, near = 0.1f;
+    float far = 10.0f, near = 0.5f;
     float left = -2, right = 2, top = 1, bottom = -1;
     std::vector<std::vector<sf::Color>> colourBuf;
     std::vector<std::vector<float>> zBuf;
@@ -28,21 +28,21 @@ std::pair<size_t, size_t> Screen::getSize() const {
 
 glm::mat4 Screen::getProjectionMatrix() const {
     glm::mat4 projection(near);
-    projection[2][3] = 1;
-    projection[3][2] = -far * near;
-    projection[2][2] += far;
+    projection[2][2] = (far + near) / (far - near);
     projection[3][3] = 0;
+    projection[2][3] = -1;
+    projection[3][2] = 2 * far * near / (far - near);
     return projection;
 }
 
 void Screen::setColour(sf::Color colour, size_t x, size_t y, float z) {
     assert(x < width && y < height);
-    if (z < near || z > far) {
+    if (z < -1 || z > 1) {
         return;
     }
-    if (z < zBuf[x][y]) {
-        zBuf[x][y] = z;
-        colourBuf[x][y] = colour;
+    if (z < zBuf[x][height - 1 - y]) { // height - 1 - y т.к. у экрана y смотрит вниз
+        zBuf[x][height - 1 - y] = z;
+        colourBuf[x][height - 1 - y] = colour;
     }
 }
 
@@ -62,7 +62,7 @@ void Screen::clear() {
     for (int i = 0; i < width; ++i)
         for (int j = 0; j < height; ++j) {
             colourBuf[i][j] = sf::Color::Black;
-            zBuf[i][j] = far + 1;
+            zBuf[i][j] = 2;
         }
 }
 
@@ -75,10 +75,10 @@ glm::mat4 Screen::getVeiwOrtMatrix() const {
     glm::mat4 ort(1);
     ort[0][0] = 2.f / (right - left);
     ort[1][1] = 2.f / (top - bottom);
-    ort[2][2] = 2.f / (near - far);
+    ort[2][2] = -2.f / (far - near);
     ort[3][0] = -(right + left) / (right - left);
     ort[3][1] = -(top + bottom) / (top - bottom);
-    ort[3][2] = -(near + far) / (near - far);
+    ort[3][2] = -(near + far) / (far - near);
     return veiwPort * ort;
 }
 
