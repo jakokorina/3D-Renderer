@@ -36,6 +36,7 @@ glm::mat4 Camera::getCameraTransformationMatrix() const {
     for (auto & vec : orthonormalCameraBasis) {
         vec /= vec.length();
     }
+    orthonormalCameraBasis[0] = -orthonormalCameraBasis[0];
     glm::mat4 transformMatrix = glm::mat4(0.f);
     for (int i = 0; i < 3; ++i) {
         for (int j = 0; j < 3; ++j) {
