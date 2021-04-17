@@ -43,7 +43,7 @@ void Triangle::draw(Screen& screen, const glm::mat4& transformMatrix) const {
     /*for (int i = 0; i < 3; ++i) {
         std::cout << newPoints[i].x << " "<< newPoints[i].y << " " << newPoints[i].z << '\n';
     }*/
-    auto[w, h] = screen.getSize();
+    auto[h, w] = screen.getSize();
     float left = std::min({newPoints[0].x, newPoints[1].x, newPoints[2].x}), right = std::max(
             {newPoints[0].x, newPoints[1].x, newPoints[2].x});
     float bottom = std::min({newPoints[0].y, newPoints[1].y, newPoints[2].y}), top = std::max(
