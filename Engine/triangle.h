@@ -57,8 +57,8 @@ void Triangle::draw(Screen& screen, const glm::mat4& transformMatrix) const {
 }
 
 std::pair<bool, glm::vec3> Triangle::barycentricCoordinates(const std::vector<glm::vec4>& V, const glm::vec2& P) {
-    glm::vec3 a = {V[1].x - V[0].x, V[2].x - V[0].x, P.x - V[0].x};
-    glm::vec3 b = {V[1].y - V[0].y, V[2].y - V[0].y, P.y - V[0].y};
+    glm::vec3 a = {V[1].x - V[0].x, V[2].x - V[0].x, V[0].x - P.x};
+    glm::vec3 b = {V[1].y - V[0].y, V[2].y - V[0].y, V[0].y - P.y};
     glm::vec3 c = glm::cross(a, b);
     c /= c.z;
     return {c.x >= 0 && c.y >= 0 && (1 - c.x - c.y) > 0, c};
