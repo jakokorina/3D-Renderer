@@ -19,7 +19,7 @@ public:
     void setColour(sf::Color colour, size_t x, size_t y, float z);
     void screenToWindow(sf::RenderWindow& window);
     void clear();
-    glm::mat4 getVeiwOrtMatrix() const;
+    glm::mat4 getViewOrtMatrix() const;
 };
 
 std::pair<size_t, size_t> Screen::getSize() const {
@@ -66,19 +66,19 @@ void Screen::clear() {
         }
 }
 
-glm::mat4 Screen::getVeiwOrtMatrix() const {
-    glm::mat4 veiwPort(1);
-    veiwPort[3][0] = (width - 1) / 2.f;
-    veiwPort[3][1] = (height - 1) / 2.f;
-    veiwPort[0][0] = width / 2.f;
-    veiwPort[1][1] = height / 2.f;
+glm::mat4 Screen::getViewOrtMatrix() const {
+    glm::mat4 viewport(1);
+    viewport[3][0] = (width - 1) / 2.f;
+    viewport[3][1] = (height - 1) / 2.f;
+    viewport[0][0] = width / 2.f;
+    viewport[1][1] = height / 2.f;
     glm::mat4 ort(1);
     ort[0][0] = 2.f / (right - left);
     ort[1][1] = 2.f / (top - bottom);
     ort[2][2] = -1;
     ort[3][0] = -(right + left) / (right - left);
     ort[3][1] = -(top + bottom) / (top - bottom);
-    return veiwPort * ort;
+    return viewport * ort;
 }
 
 Screen::Screen(int h, int w): height(h), width(w) {
