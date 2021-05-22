@@ -6,6 +6,7 @@
 #include <vector>
 
 class Screen {
+private:
     int height, width;
     float far = 10.0f, near = 0.5f;
     float left = -2, right = 2, top = 1, bottom = -1;
