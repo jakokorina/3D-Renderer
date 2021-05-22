@@ -7,6 +7,7 @@
 #include <vector>
 
 class Renderer{
+private:
     Camera& camera;
     Screen& screen;
 
