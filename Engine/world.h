@@ -8,6 +8,7 @@
 #include <vector>
 
 class World {
+private:
     std::vector<Triangle> objects;
     Camera camera;
     Screen screen;
