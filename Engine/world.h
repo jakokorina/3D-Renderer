@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 #include "renderer.h"
 #include "camera.h"
 #include "screen.h"
