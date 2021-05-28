@@ -12,14 +12,14 @@ namespace Engine {
     }
 
     void Triangle::draw(Screen& screen, const glm::mat4& transformMatrix) const {
-        std::vector<glm::vec4> newPoints(3);
+        glm::mat3x4 newPoints(3);
         for (int i = 0; i < 3; ++i) {
             newPoints[i] = {points[i].x, points[i].y, points[i].z, 1.0f};
         }
-        for (auto& p : newPoints) {
-            p = transformMatrix * p;
-            p /= p.w;
-        }
+        newPoints = transformMatrix * newPoints;
+        newPoints[0] /= newPoints[0].w;
+        newPoints[1] /= newPoints[1].w;
+        newPoints[2] /= newPoints[2].w;
         if (newPoints[0].y == newPoints[1].y && newPoints[0].y == newPoints[2].y) {
             return; // треугольники, стоящие перпендиклярно камере, не интересны
         }
@@ -48,7 +48,7 @@ namespace Engine {
         }
     }
 
-    std::pair<bool, float> Triangle::barycentricCoordinates(const std::vector<glm::vec4>& V, const glm::vec2& P) {
+    std::pair<bool, float> Triangle::barycentricCoordinates(const glm::mat3x4& V, const glm::vec2& P) {
         glm::vec3 a = {V[1].x - V[0].x, V[2].x - V[0].x, V[0].x - P.x};
         glm::vec3 b = {V[1].y - V[0].y, V[2].y - V[0].y, V[0].y - P.y};
         glm::vec3 c = glm::cross(a, b);
