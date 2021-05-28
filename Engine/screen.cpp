@@ -4,6 +4,8 @@ namespace Engine {
     Screen::Screen(int h, int w) : height(h), width(w) {
         colourBuf = std::vector<std::vector<sf::Color>>(w, std::vector<sf::Color>(h, sf::Color::Black));
         zBuf = std::vector<std::vector<float>>(w, std::vector<float>(h, far + 1));
+        void computeViewOrt();
+        void computeProjection();
     }
 
     std::pair<size_t, size_t> Screen::getSize() const {
