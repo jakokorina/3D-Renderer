@@ -2,6 +2,7 @@
 
 namespace Engine {
     Camera::Camera(glm::vec3 loc, glm::vec3 dir) : location(loc), direction(dir) {
+        direction /= direction.length();
         computeMatrix();
     }
 
