@@ -36,5 +36,6 @@ namespace Engine {
         void addObject(const std::vector<glm::vec3>& points, sf::Color colour);
         void addObject(const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3, sf::Color colour);
         void start();
+        void keyPressed(sf::Keyboard::Key key);
     };
 }
