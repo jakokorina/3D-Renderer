@@ -23,10 +23,30 @@ namespace Engine {
             sf::Event event;
             while (window.pollEvent(event)) {
                 // Request for closing the window
-                if (event.type == sf::Event::Closed)
+                if (event.type == sf::Event::Closed) {
                     window.close();
+                } else if (event.type == sf::Event::KeyPressed) {
+                    keyPressed(event.key.code);
+                    drawPicture();
+                }
             }
-            // здесь можно написать обработку движения камеры с клавиатуры
         }
     }
+    void World::keyPressed(sf::Keyboard::Key key) {
+        switch (key) {
+            case sf::Keyboard::A:
+                camera.changeLocation({-1, 0, 0});
+                break;
+            case sf::Keyboard::D:
+                camera.changeLocation({1, 0, 0});
+                break;
+            case sf::Keyboard::W:
+                camera.changeLocation({0, 1, 0});
+                break;
+            case sf::Keyboard::S:
+                camera.changeLocation({0, -1, 0});
+                break;
+        }
+    }
+
 }
