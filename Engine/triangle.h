@@ -13,7 +13,7 @@ namespace Engine {
     private:
         std::vector<glm::vec3> points;
         sf::Color colour;
-        static std::pair<bool, float> barycentricCoordinates(const std::vector<glm::vec4>& V, const glm::vec2& P);
+        static std::pair<bool, float> barycentricCoordinates(const glm::mat3x4& V, const glm::vec2& P);
 
     public:
         Triangle(const std::vector<glm::vec3>& p, sf::Color colour_);
