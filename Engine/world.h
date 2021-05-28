@@ -16,9 +16,7 @@ namespace Engine {
         Screen screen;
         Renderer renderer;
         sf::RenderWindow window;
-        void drawPicture();
-        void setCameraLocation(glm::vec3 new_location);
-        void setCameraDirection(glm::vec3 new_direction);
+        void drawPicture();;
 
     public:
         World(int width = 800, int height = 800, glm::vec3 camLoc = {0, 0, -1}, glm::vec3 camDir = {0, 0, 1}) : camera(
