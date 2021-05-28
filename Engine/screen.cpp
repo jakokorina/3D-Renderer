@@ -4,19 +4,15 @@ namespace Engine {
     Screen::Screen(int h, int w) : height(h), width(w) {
         colourBuf = std::vector<std::vector<sf::Color>>(w, std::vector<sf::Color>(h, sf::Color::Black));
         zBuf = std::vector<std::vector<float>>(w, std::vector<float>(h, far + 1));
-        void computeViewOrt();
-        void computeProjection();
+        screenMatrix = computeViewOrt() * computeProjection();
     }
 
     std::pair<size_t, size_t> Screen::getSize() const {
         return std::pair<size_t, size_t>(height, width);
     }
 
-    glm::mat4 Screen::getProjectionMatrix() const {
-        return projectionMatrix;
-    }
-    glm::mat4 Screen::getViewOrtMatrix() const {
-        return viewOrtMatrix;
+    glm::mat4 Screen::getScreenMatrix() const {
+        return screenMatrix;
     }
 
     void Screen::setColour(sf::Color colour, size_t x, size_t y, float z) {
@@ -49,7 +45,7 @@ namespace Engine {
             }
     }
 
-    void Screen::computeViewOrt() {
+    glm::mat4 Screen::computeViewOrt() {
         glm::mat4 viewport(1);
         viewport[3][0] = (width - 1) / 2.f;
         viewport[3][1] = (height - 1) / 2.f;
@@ -61,14 +57,14 @@ namespace Engine {
         ort[2][2] = -1;
         ort[3][0] = -(right + left) / (right - left);
         ort[3][1] = -(top + bottom) / (top - bottom);
-        viewOrtMatrix = viewport * ort;
+        return viewport * ort;
     }
-    void Screen::computeProjection() {
+    glm::mat4 Screen::computeProjection() {
         glm::mat4 projection(near);
         projection[2][2] = (far + near) / (far - near);
         projection[3][3] = 0;
         projection[2][3] = -1;
         projection[3][2] = 2 * far * near / (far - near);
-        projectionMatrix = projection;
+        return projection;
     }
 }
