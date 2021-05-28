@@ -11,7 +11,12 @@ namespace Engine {
         glm::vec3 location;
         glm::vec3 direction;
         glm::mat4 transformMatrix;
+        glm::mat4 basisMatrix;
+        glm::mat4 translationMatrix;
         void computeMatrix();
+        void computeBasis();
+        void computeTranslation();
+
 
     public:
         Camera(glm::vec3 loc, glm::vec3 dir);
