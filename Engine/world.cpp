@@ -10,10 +10,6 @@ namespace Engine {
         objects.push_back(triangle);
     }
 
-    void World::setCameraLocation(glm::vec3 new_location) {
-        camera.setLocation(new_location);
-    }
-
     void World::drawPicture() {
         window.clear();
         screen.clear();
@@ -32,8 +28,5 @@ namespace Engine {
             }
             // здесь можно написать обработку движения камеры с клавиатуры
         }
-    }
-    void World::setCameraDirection(glm::vec3 new_direction) {
-        camera.setDirection(new_direction);
     }
 }
