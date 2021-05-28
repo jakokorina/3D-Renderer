@@ -3,7 +3,7 @@
 namespace Engine {
     void Renderer::drawObjects(const std::vector<Triangle>& objects, sf::RenderWindow& window) {
         glm::mat4 transformMatrix =
-                screen.getViewOrtMatrix() * screen.getProjectionMatrix() * camera.getCameraTransformationMatrix();
+                screen.getScreenMatrix() * camera.getCameraTransformMatrix();
         for (const auto& object : objects) {
             object.draw(screen, transformMatrix);
         }
