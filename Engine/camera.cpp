@@ -12,9 +12,8 @@ namespace Engine {
         computeTranslation();
         computeMatrix();
     }
-    void Camera::changeDirection(glm::vec3 delta) {
-        direction = delta;
-        computeTranslation();
+    void Camera::changeDirection(glm::vec3 deltaPhi) {
+        //basisMatrix = glm::rotate(basisMatrix, deltaPhi);
         computeMatrix();
     }
 
@@ -30,12 +29,11 @@ namespace Engine {
         glm::vec3 viewUpVector = glm::vec3{0, 1.f, 0};
         std::vector<glm::vec3> orthonormalCameraBasis(3);
         orthonormalCameraBasis[2] = -direction;
-        orthonormalCameraBasis[0] = glm::cross(direction, viewUpVector);
-        orthonormalCameraBasis[1] = glm::cross(orthonormalCameraBasis[0], direction);
+        orthonormalCameraBasis[0] = -glm::cross(direction, viewUpVector);
+        orthonormalCameraBasis[1] = -glm::cross(orthonormalCameraBasis[0], direction);
         for (auto& vec : orthonormalCameraBasis) {
-            vec /= vec.length();
+            glm::normalize(vec);
         }
-        // orthonormalCameraBasis[0] = -orthonormalCameraBasis[0];
         basisMatrix = glm::mat4(1.f);
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 3; ++j) {
