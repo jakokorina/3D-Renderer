@@ -28,9 +28,9 @@ namespace Engine {
     void Camera::computeBasis() {
         glm::vec3 viewUpVector = glm::vec3{0, 1.f, 0};
         std::vector<glm::vec3> orthonormalCameraBasis(3);
-        orthonormalCameraBasis[2] = -direction;
         orthonormalCameraBasis[0] = -glm::cross(direction, viewUpVector);
         orthonormalCameraBasis[1] = -glm::cross(orthonormalCameraBasis[0], direction);
+        orthonormalCameraBasis[2] = -direction;
         for (auto& vec : orthonormalCameraBasis) {
             glm::normalize(vec);
         }
