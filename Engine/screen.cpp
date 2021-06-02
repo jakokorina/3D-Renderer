@@ -7,7 +7,7 @@ namespace Engine {
         screenMatrix = computeViewOrt() * computeProjection();
     }
 
-    std::pair<size_t, size_t> Screen::getSize() const {
+    std::pair<int, int> Screen::getSize() const {
         return std::pair<size_t, size_t>(height, width);
     }
 
@@ -20,9 +20,9 @@ namespace Engine {
         if (z < -1 || z > 1) {
             return;
         }
-        if (z < zBuf[width - 1 - x][height - 1 - y]) { // height - 1 - y т.к. у экрана y смотрит вниз
-            zBuf[width - 1 - x][height - 1 - y] = z; // зачем отражать по х пока не понятно, но без этого ему плохо
-            colourBuf[width - 1 - x][height - 1 - y] = colour;
+        if (z < zBuf[x][height - 1 - y]) { // height - 1 - y т.к. у экрана y смотрит вниз
+            zBuf[x][height - 1 - y] = z;
+            colourBuf[x][height - 1 - y] = colour;
         }
     }
     void Screen::screenToWindow(sf::RenderWindow& window) {
@@ -45,7 +45,7 @@ namespace Engine {
             }
     }
 
-    glm::mat4 Screen::computeViewOrt() {
+    glm::mat4 Screen::computeViewOrt() const {
         glm::mat4 viewport(1);
         viewport[3][0] = (width - 1) / 2.f;
         viewport[3][1] = (height - 1) / 2.f;
@@ -59,7 +59,7 @@ namespace Engine {
         ort[3][1] = -(top + bottom) / (top - bottom);
         return viewport * ort;
     }
-    glm::mat4 Screen::computeProjection() {
+    glm::mat4 Screen::computeProjection() const {
         glm::mat4 projection(near);
         projection[2][2] = (far + near) / (far - near);
         projection[3][3] = 0;
