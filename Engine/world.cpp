@@ -59,34 +59,34 @@ namespace Engine {
     void World::keyPressed(sf::Keyboard::Key key) {
         switch (key) {
             case sf::Keyboard::A:
-                camera.changeLocation({-0.2, 0, 0});
+                camera.changeLocation({-delta, 0, 0});
                 break;
             case sf::Keyboard::D:
-                camera.changeLocation({0.2, 0, 0});
+                camera.changeLocation({delta, 0, 0});
                 break;
             case sf::Keyboard::W:
-                camera.changeLocation({0, 0.2, 0});
+                camera.changeLocation({0, delta, 0});
                 break;
             case sf::Keyboard::S:
-                camera.changeLocation({0, -0.2, 0});
+                camera.changeLocation({0, -delta, 0});
                 break;
             case sf::Keyboard::C:
-                camera.changeLocation({0, 0, -0.2});
+                camera.changeLocation({0, 0, -delta});
                 break;
             case sf::Keyboard::X:
-                camera.changeLocation({0, 0, 0.2});
-                break;
-            case sf::Keyboard::Up:
-                camera.changeDirection({0, M_PI / 32, 0});
-                break;
-            case sf::Keyboard::Down:
-                camera.changeDirection({0, -M_PI / 32, 0});
+                camera.changeLocation({0, 0, delta});
                 break;
             case sf::Keyboard::Right:
-                camera.changeDirection({M_PI / 32, 0, 0});
+                camera.changeDirection({0, deltaPhi, 0});
                 break;
             case sf::Keyboard::Left:
-                camera.changeDirection({-M_PI / 32, 0, 0});
+                camera.changeDirection({0, -deltaPhi, 0});
+                break;
+            case sf::Keyboard::Up:
+                camera.changeDirection({deltaPhi, 0, 0});
+                break;
+            case sf::Keyboard::Down:
+                camera.changeDirection({-deltaPhi / 32, 0, 0});
                 break;
             case sf::Keyboard::Escape:
                 window.close();
