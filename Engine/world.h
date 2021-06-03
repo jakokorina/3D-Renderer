@@ -23,7 +23,8 @@ namespace Engine {
         sf::RenderWindow window;
         sf::Font font;
         sf::Text text;
-        void drawPicture(const sf::Clock& clock);;
+        constexpr static float delta = 0.2, deltaPhi = M_PI / 64;
+        void drawPicture(const sf::Clock& clock);
 
     public:
         World(int width = 800, int height = 800, glm::vec3 camLoc = {0, 0, -1}, glm::vec3 camDir = {0, 0, 1});
