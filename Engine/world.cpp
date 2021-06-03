@@ -33,7 +33,8 @@ namespace Engine {
         float before = clock.getElapsedTime().asSeconds();
         renderer.drawObjects(objects, window);
         float time = clock.getElapsedTime().asSeconds() - before;
-        text.setString("Seconds per frame: " + std::to_string(time));
+        text.setString("Seconds per frame: " + std::to_string(time) + "\nNumber of triangles: " +
+                       std::to_string(objects.size()));
         window.draw(text);
         window.display();
     }
@@ -69,23 +70,23 @@ namespace Engine {
             case sf::Keyboard::S:
                 camera.changeLocation({0, -0.2, 0});
                 break;
-            case sf::Keyboard::X:
+            case sf::Keyboard::C:
                 camera.changeLocation({0, 0, -0.2});
                 break;
-            case sf::Keyboard::C:
+            case sf::Keyboard::X:
                 camera.changeLocation({0, 0, 0.2});
                 break;
             case sf::Keyboard::Up:
-                camera.changeDirection({0, M_PI / 20, 0});
+                camera.changeDirection({0, M_PI / 32, 0});
                 break;
             case sf::Keyboard::Down:
-                camera.changeDirection({0, -M_PI / 20, 0});
+                camera.changeDirection({0, -M_PI / 32, 0});
                 break;
             case sf::Keyboard::Right:
-                camera.changeDirection({M_PI / 20, 0, 0});
+                camera.changeDirection({M_PI / 32, 0, 0});
                 break;
             case sf::Keyboard::Left:
-                camera.changeDirection({-M_PI / 20, 0, 0});
+                camera.changeDirection({-M_PI / 32, 0, 0});
                 break;
             case sf::Keyboard::Escape:
                 window.close();
