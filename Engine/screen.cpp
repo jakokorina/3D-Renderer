@@ -21,12 +21,10 @@ namespace Engine {
             return;
         }
         y = height - 1 - y;  // т.к. у экрана ось y направлена вниз
-        mutex.lock();
         if (z < zBuf[x][y]) { // height - 1 - y
             zBuf[x][y] = z;
             colourBuf[x][y] = colour;
         }
-        mutex.unlock();
     }
     void Screen::screenToWindow(sf::RenderWindow& window) {
         for (int x = 0; x < width; ++x) {
