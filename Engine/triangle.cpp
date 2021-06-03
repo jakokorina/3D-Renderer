@@ -49,11 +49,10 @@ namespace Engine {
                 {newPoints[0].x, newPoints[1].x, newPoints[2].x});
         float bottom = std::min({newPoints[0].y, newPoints[1].y, newPoints[2].y}), top = std::max(
                 {newPoints[0].y, newPoints[1].y, newPoints[2].y});
-        for (int x = 0; x < w; ++x) {
-            for (int y = 0; y < h; ++y) {
-                if (x < left || y < bottom || x > right || y > top) {
-                    continue;
-                } // точка не попадает в минимальный прямоугольник, содержащий наш треугольник
+        left = std::max(left, (float) 0),  right = std::min(right, (float) w - 1);
+        bottom = std::max(bottom, (float) 0),  top = std::min(top, (float) h - 1);
+        for (int x = (int) left; x <= (int) right; ++x) {
+            for (int y = (int) bottom; y <= (int) top; ++y) {
                 auto[inTriangle, zValue] = barycentricCoordinates(newPoints, glm::vec2{x, y});
                 if (inTriangle) {
                     screen.setColour(zValue.second, x, y, zValue.first);
