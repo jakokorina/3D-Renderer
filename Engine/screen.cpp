@@ -20,10 +20,13 @@ namespace Engine {
         if (z < -1 || z > 1) {
             return;
         }
-        if (z < zBuf[x][height - 1 - y]) { // height - 1 - y т.к. у экрана y смотрит вниз
-            zBuf[x][height - 1 - y] = z;
-            colourBuf[x][height - 1 - y] = colour;
+        y = height - 1 - y;  // т.к. у экрана ось y направлена вниз
+        mutex.lock();
+        if (z < zBuf[x][y]) { // height - 1 - y
+            zBuf[x][y] = z;
+            colourBuf[x][y] = colour;
         }
+        mutex.unlock();
     }
     void Screen::screenToWindow(sf::RenderWindow& window) {
         for (int x = 0; x < width; ++x) {
@@ -66,5 +69,14 @@ namespace Engine {
         projection[2][3] = -1;
         projection[3][2] = 2 * far * near / (far - near);
         return projection;
+    }
+    int Screen::inViewFrustrum(const glm::vec4& vec) const {
+        if (vec.z >= near) {
+            return 1;
+        } else if (vec.z <= far) {
+            return -1;
+        } else {
+            return 0;
+        }
     }
 }
