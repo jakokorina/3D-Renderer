@@ -2,30 +2,21 @@
 
 namespace Engine {
     Camera::Camera(glm::vec3 loc, glm::vec3 dir) : location(loc), direction(dir) {
-        computeBasis();
-        computeTranslation();
-        computeMatrix();
+        transformMatrix = computeBasis() * computeTranslation(location);
     }
 
     void Camera::changeLocation(glm::vec3 delta) {
-        location += delta;
-        computeTranslation();
-        computeMatrix();
+        transformMatrix = computeTranslation(delta) * transformMatrix;
     }
     void Camera::changeDirection(glm::vec3 deltaPhi) {
         //basisMatrix = glm::rotate(basisMatrix, deltaPhi);
-        computeMatrix();
     }
 
     glm::mat4 Camera::getCameraTransformMatrix() const {
         return transformMatrix;
     }
 
-    void Camera::computeMatrix() {
-        transformMatrix = basisMatrix * translationMatrix;
-    }
-
-    void Camera::computeBasis() {
+    glm::mat4 Camera::computeBasis() {
         glm::vec3 viewUpVector = glm::vec3{0, 1.f, 0};
         std::vector<glm::vec3> orthonormalCameraBasis(3);
         orthonormalCameraBasis[0] = -glm::cross(direction, viewUpVector);
@@ -34,18 +25,20 @@ namespace Engine {
         for (auto& vec : orthonormalCameraBasis) {
             glm::normalize(vec);
         }
-        basisMatrix = glm::mat4(1.f);
+        auto basisMatrix = glm::mat4(1.f);
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 3; ++j) {
                 basisMatrix[j][i] = orthonormalCameraBasis[i][j];
             }
         }
+        return basisMatrix;
     }
 
-    void Camera::computeTranslation() {
-        translationMatrix = glm::mat4(1.f);
+    glm::mat4 Camera::computeTranslation(const glm::vec3& vec) {
+        auto translationMatrix = glm::mat4(1.f);
         for (int i = 0; i < 3; ++i) {
-            translationMatrix[3][i] = -location[i];
+            translationMatrix[3][i] = -vec[i];
         }
+        return translationMatrix;
     }
 }
