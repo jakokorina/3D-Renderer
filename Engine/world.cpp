@@ -86,7 +86,7 @@ namespace Engine {
                 camera.changeDirection({deltaPhi, 0, 0});
                 break;
             case sf::Keyboard::Down:
-                camera.changeDirection({-deltaPhi / 32, 0, 0});
+                camera.changeDirection({-deltaPhi, 0, 0});
                 break;
             case sf::Keyboard::Escape:
                 window.close();
