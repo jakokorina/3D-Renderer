@@ -2,6 +2,8 @@
 
 namespace Engine {
     Screen::Screen(int h, int w) : height(h), width(w) {
+        right *= (float) w / h;
+        left *= (float) w / h;
         colourBuf = std::vector<std::vector<sf::Color>>(w, std::vector<sf::Color>(h, sf::Color::Black));
         zBuf = std::vector<std::vector<float>>(w, std::vector<float>(h, far + 1));
         screenMatrix = computeViewOrt() * computeProjection();
@@ -61,6 +63,7 @@ namespace Engine {
         return viewport * ort;
     }
     glm::mat4 Screen::computeProjection() const {
+        //return glm::perspective(2.f, (float) width / height, near, far);
         glm::mat4 projection(near);
         projection[2][2] = (far + near) / (far - near);
         projection[3][3] = 0;
@@ -68,13 +71,8 @@ namespace Engine {
         projection[3][2] = 2 * far * near / (far - near);
         return projection;
     }
-    int Screen::inViewFrustrum(const glm::vec4& vec) const {
-        if (vec.z >= near) {
-            return 1;
-        } else if (vec.z <= far) {
-            return -1;
-        } else {
-            return 0;
-        }
+
+    float Screen::getNear() const {
+        return near;
     }
 }
