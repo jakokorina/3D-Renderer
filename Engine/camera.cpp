@@ -1,15 +1,15 @@
 #include "camera.h"
+#include <iostream>
 
 namespace Engine {
     Camera::Camera(glm::vec3 loc, glm::vec3 dir) : location(loc), direction(dir) {
-        transformMatrix = computeBasis() * computeTranslation(location);
+        transformMatrix = computeTranslation(location) * computeBasis();
     }
 
     void Camera::changeLocation(glm::vec3 delta) {
         transformMatrix = computeTranslation(delta) * transformMatrix;
     }
     void Camera::changeDirection(glm::vec3 deltaPhi) {
-        //basisMatrix = glm::rotate(basisMatrix, deltaPhi);
         glm::mat4 rotateMatrix(1.f);
 
         if (deltaPhi.x != 0) {
@@ -25,6 +25,7 @@ namespace Engine {
             rotateMatrix[0][2] = sn;
             rotateMatrix[2][2] = cs;
         }
+
         transformMatrix = rotateMatrix * transformMatrix;
     }
 
@@ -45,7 +46,9 @@ namespace Engine {
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 3; ++j) {
                 basisMatrix[j][i] = orthonormalCameraBasis[i][j];
+                // std::cout << basisMatrix[j][i] << " ";
             }
+            // std::cout << "\n";
         }
         return basisMatrix;
     }
